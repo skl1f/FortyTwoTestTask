@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import Contact
+from django.contrib.auth.models import User
 from django.test.client import Client
 
 
@@ -23,12 +24,17 @@ class ContactTest(TestCase):
 
 class CheckAdmin(TestCase):
 
+    def check_if_exists_admin(self):
+        admin = User.objects.get(id=1)
+        assert(admin)
+
     def check_login(self):
         "Check admin default login and password"
 
         c = Client()
         login = c.login(username='admin', password='admin')
-        assert(login)
+        return login
 
     def runTest(self):
+        self.check_if_exists_admin()
         self.check_login()
