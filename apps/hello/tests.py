@@ -24,15 +24,8 @@ class ContactTest(TestCase):
 
 class CheckAdmin(TestCase):
 
-    def create_admin(self):
-        ""
-        try:
-            admin = User.objects.get(id=1)
-        except:
-            User.objects.create_superuser(
-                u'admin', u'admin@example.com', u'admin')
-
-        admin = self.check_login()
+    def check_if_exists_admin(self):
+        admin = User.objects.get(id=1)
         assert(admin)
 
     def check_login(self):
@@ -43,4 +36,5 @@ class CheckAdmin(TestCase):
         return login
 
     def runTest(self):
-        self.create_admin()
+        self.check_if_exists_admin()
+        self.check_login()
