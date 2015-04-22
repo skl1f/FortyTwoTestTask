@@ -13,7 +13,7 @@ import os
 import sys
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
-BASE_DIR = os.path.dirname(PROJECT_DIR)
+BASE_DIR = os.path.dirname(os.path.join(PROJECT_DIR))
 
 # App/Library Paths
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
@@ -27,7 +27,7 @@ SECRET_KEY = 'x=c0_e(onjn^80irdy2c221#)2t^qi&6yrc$31i(&ti*_jf3l8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -107,7 +107,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_DIR, "static"),
     os.path.join(BASE_DIR, 'apps', 'hello', 'static'),
 )
 # Template Settings
@@ -117,7 +116,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, 'templates'),
-    os.path.join(BASE_DIR, 'apps/hello/static'),
+    os.path.join(BASE_DIR, 'apps/hello/templates'),
 )
 
 # Turn off south during test
