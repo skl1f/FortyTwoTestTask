@@ -8,7 +8,7 @@
 .idea
 .Ds_Store
 *~
-git_ignore
+.git_ignore
 build
 .noseids
 media
