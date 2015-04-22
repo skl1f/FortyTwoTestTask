@@ -2,8 +2,8 @@ from django.test import TestCase
 from .models import Contact
 
 
-class SomeTests(TestCase):
-    def test_math(self):
+class ContactTest(TestCase):
+    def check_contact_info(self):
         "Check if information is correct"
         contact = Contact.objects.get(id=1)
         assert(contact.name == u'Oleksii')
