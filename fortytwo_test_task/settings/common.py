@@ -111,7 +111,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(BASE_DIR, 'apps/home/static'),
+    os.path.join(BASE_DIR, 'apps/hello/static'),
 )
 
 # Static files fix
@@ -128,7 +128,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, 'templates'),
-    os.path.join(BASE_DIR, 'apps/home/templates'),
+    os.path.join(BASE_DIR, 'apps/hello/templates'),
 )
 
 # Turn off south during test
