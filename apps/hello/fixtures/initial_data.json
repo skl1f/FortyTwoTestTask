@@ -1,0 +1,11 @@
+[ {"pk": 1, 
+   "model": "hello.contact", 
+   "fields": {"bio": "Python Dev", 
+              "name": "Oleksii", 
+              "other_contact": "https://github.com/skl1f", 
+              "lastname": "Miroshnychenko", 
+              "date_of_birth": "1991-04-01", 
+              "skype": "sklifeg", 
+              "jabber": "skl1f@jabber.me", 
+              "email": "skl1f@ukrgadget.com"}}
+]
