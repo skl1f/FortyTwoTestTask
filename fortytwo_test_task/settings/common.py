@@ -30,8 +30,7 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = [
-    '213.111.120.66',
-    '213.111.120.65'
+    '*',
 ]
 
 
