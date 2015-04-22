@@ -1,9 +1,12 @@
 from django.test import TestCase
-
-# Create your tests here.
+from .models import Contact
 
 
 class SomeTests(TestCase):
     def test_math(self):
-        "put docstrings in your tests"
-        assert(2 + 2 == 5)
+        "Check if information is correct"
+        contact = Contact.objects.get(id=1)
+        assert(contact.name == u'Oleksii')
+        assert(contact.lastname == u'Miroshnychenko')
+        assert(contact.bio == u'Python Dev')
+        assert(contact.other_contact == u'https://github.com/skl1f')
