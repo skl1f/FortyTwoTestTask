@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
 {
   "pk": 1, 
@@ -37,3 +38,8 @@
     fields": {"value": 0}
 }
 ]
+=======
+[{"pk": 1, "model": "auth.user", "fields": {"username": "admin", "first_name": "", "last_name": "", "is_active": true, "is_superuser": true, "is_staff": true, "last_login": "2015-04-22T11:12:49.420Z", "groups": [], "user_permissions": [], "password": "pbkdf2_sha256$12000$j9PuunCQttOO$4ZWdgaGr5OR34jpEDrh1eRh2eSwA3a7rg92Sk9r3jgo=", "email": "admin@example.com", "date_joined": "2015-04-22T11:12:49.420Z"}},
+{"pk": 1, "model": "hello.contact", "fields": {"bio": "Python Dev", "name": "Oleksii", "other_contact": "https://github.com/skl1f", "lastname": "Miroshnychenko", "date_of_birth": "1991-04-01", "skype": "sklifeg", "jabber": "skl1f@jabber.me", "email": "skl1f@ukrgadget.com"}}, 
+{"pk": 1, "model": "hello.requestcounter", "fields": {"value": 0}}]
+>>>>>>> c2aef56aceda7f65bb3be36057c26822d6a5ef11
