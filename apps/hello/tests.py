@@ -1,13 +1,14 @@
 from django.test import TestCase
-from .models import Contact
+from .models import Contact, RequestLog
 from django.contrib.auth.models import User
 from django.test.client import Client
 
 
 class ContactTest(TestCase):
 
+    "Check that status_code is 200 and information in db is correct"
+
     def check_contact_info(self):
-        "Check that status_code is 200 and information in db is correct"
 
         c = Client()
         page = c.get('/')
@@ -38,3 +39,19 @@ class CheckAdmin(TestCase):
     def runTest(self):
         self.check_if_exists_admin()
         self.check_login()
+
+
+class RequestLogTest(TestCase):
+
+    """Check RequestLog in database after request"""
+
+    def made_request(self):
+        c = Client()
+        c.get('/missing_url')
+        try:
+            RequestLog.objects.get(full_path='/missing_url')
+        except:
+            assert(False)
+
+    def runTest(self):
+        self.made_request()
