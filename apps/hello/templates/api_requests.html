@@ -1,0 +1,14 @@
+{% if logs %}
+<ul>
+{% for log in logs %}
+<li><b>Request method: </b> <p>{{ log.request_method }};</p> 
+<b>full path: </b> <p>{{ log.full_path }};</p>
+<b>remote addr: </b><p>{{ log.remote_addr }};</p> 
+<b>http user agent: </b><p>{{ log.http_user_agent }};</p> 
+<b>http referer </b> <p>{{ log.http_referer }};</p> 
+<b>http accept language </b><p>{{ log.http_accept_language }}</p></li>
+{% endfor %}
+</ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}

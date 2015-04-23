@@ -26,8 +26,26 @@
             </ul></div>
         </div>
         <div class="row">
-            <div class="col-md-6"><h2>Requests:</h2>
-            {{ requests }}
-            </div>
+            <h2>Requests:</h2>
+            <div id="requests"></div>
+                <script>
+                /* AJAX request to checker */
+                function callServerAsync(){
+                    $.ajax({
+                    url: '/api/requests/',
+                    success: function(response) {
+                        successCallback(response);
+                    }
+                });
+                }
+
+                function successCallback(responseObj){
+                    document.getElementById("requests").innerHTML = responseObj;
+                }
+                callServerAsync();
+                setInterval(callServerAsync,10000);
+                </script>
+    </body>
+</html>
         </div>
 {% endblock %}
