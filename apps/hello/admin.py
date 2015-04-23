@@ -1,5 +1,6 @@
 from django.contrib import admin
+from .models import Contact, RequestLog
 
-from .models import Contact
 
 admin.site.register(Contact)
+admin.site.register(RequestLog)
