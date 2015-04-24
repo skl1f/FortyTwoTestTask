@@ -18,7 +18,7 @@ def requests(request):
 
 def api_requests(request):
     contact = Contact.objects.get(id=1)
-    logs = RequestLog.objects.order_by('-id')[:10]
+    logs = list(RequestLog.objects.order_by('-id')[:10])
     return render(request, 'api_requests.html', {'contact': contact,
                                                  'logs': logs},
                   content_type="text/html")

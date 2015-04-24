@@ -1,9 +1,11 @@
 {% extends "hello_base.html" %}
+{% load staticfiles %}
 
 {% block title %}Main Page | 42-test-skl1f{%endblock%}
 
 {% block content %}
-    <div class="container-fluid">
+<script src="{% static "js/json2html.js" %}"></script>
+    <div class="container">
     <div class="row">
         <div class="col-md-6">
             <h1>42 Coffee Cups Test Assignment</h1>
@@ -32,20 +34,23 @@
                 /* AJAX request to checker */
                 function callServerAsync(){
                     $.ajax({
+                    dataType: "json",
                     url: '/api/requests/',
                     success: function(response) {
                         successCallback(response);
                     }
                 });
-                }
+                };
 
                 function successCallback(responseObj){
-                    document.getElementById("requests").innerHTML = responseObj;
-                }
+                    $.each(responseObj, function(obj) {
+                    console.log('<p>'+responseObj[obj]['remote addr']+'</p>');
+                    });
+                    var transform = {'tag':'li','html':'Request method: ${request_method}; Full path: ${full_path}; Remote_addr: ${remote_addr}; http user agent: ${http_user_agent}; http referer: ${http_referer}; http accept language: ${http_accept_language}'};
+                    document.getElementById('requests').innerHTML = json2html.transform(responseObj,transform);
+                };
+
                 callServerAsync();
                 setInterval(callServerAsync,10000);
                 </script>
-    </body>
-</html>
-        </div>
 {% endblock %}
