@@ -43,7 +43,6 @@
                 };
 
                 function successCallback(responseObj){
-                    $.each(responseObj, function(obj) {
                     var transform = {'tag':'li','html':'Request method: ${request_method}; Full path: ${full_path}; Remote_addr: ${remote_addr}; http user agent: ${http_user_agent}; http referer: ${http_referer}; http accept language: ${http_accept_language}'};
                     document.getElementById('requests').innerHTML = json2html.transform(responseObj,transform);
                 };
