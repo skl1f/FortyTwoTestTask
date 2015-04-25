@@ -29,10 +29,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = [
-    'lp.42cc.co',
-    '.lp.42cc.co.',
-]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
