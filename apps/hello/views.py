@@ -22,7 +22,7 @@ def requests(request):
 
 
 def api_requests(request):
-    contact = Contact.objects.get(id=1)
+    contact = Contact.objects.get(show=True)
     logs = list(RequestLog.objects.order_by('-id')[:10])
     content = {'contact': contact,
                'logs': logs}
