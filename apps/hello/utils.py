@@ -22,6 +22,7 @@ def write_logline(request, content):
         if field in request.META:
             message.append("{0}: {1}; ".format(field, request.META[field]))
     logger.info(message)
+
     if settings.DEBUG is True:
         message.append("DATA: ")
         for data in content:

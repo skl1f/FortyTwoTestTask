@@ -30,7 +30,7 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = [
-    'lp.42cc.co:1242',
+    'lp.42cc.co',
 ]
 
 
