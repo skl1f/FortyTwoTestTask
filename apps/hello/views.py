@@ -1,3 +1,4 @@
+import apps.hello.utils as utils
 from django.shortcuts import render
 from .models import Contact, RequestCounter, RequestLog
 
@@ -5,20 +6,26 @@ from .models import Contact, RequestCounter, RequestLog
 def home(request):
     contact = Contact.objects.get(id=1)
     counter = RequestCounter.objects.get(id=1).value
-    return render(request, 'index.html', {'contact': contact,
-                                          'counter': counter},
+    content = {'contact': contact,
+               'counter': counter}
+    utils.write_logline(request, content)
+    return render(request, 'index.html', content,
                   content_type="text/html")
 
 
 def requests(request):
     contact = Contact.objects.get(id=1)
-    return render(request, 'requests.html', {'contact': contact},
+    content = {'contact': contact}
+    utils.write_logline(request, content)
+    return render(request, 'requests.html', content,
                   content_type="text/html")
 
 
 def api_requests(request):
     contact = Contact.objects.get(id=1)
     logs = list(RequestLog.objects.order_by('-id')[:10])
-    return render(request, 'api_requests.json', {'contact': contact,
-                                                 'logs': logs},
+    content = {'contact': contact,
+               'logs': logs}
+    utils.write_logline(request, content)
+    return render(request, 'api_requests.json', content,
                   content_type="application/json")

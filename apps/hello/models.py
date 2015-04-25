@@ -14,6 +14,18 @@ class Contact(models.Model):
     bio = models.TextField()
     other_contact = models.TextField()
 
+    def __str__(self):
+        return 'Name: {0}, Lastname: {1}, Date of birth: {2}, \
+                Email: {3}, Jabber: {4}, Skype: {5}, Bio: {6}, \
+                Other contact: {7}'.format(self.name,
+                                           self.lastname,
+                                           self.date_of_birth,
+                                           self.email,
+                                           self.jabber,
+                                           self.skype,
+                                           self.bio,
+                                           self.other_contact)
+
 
 class RequestLog(models.Model):
 
@@ -35,6 +47,16 @@ class RequestLog(models.Model):
     http_referer = models.CharField(max_length=200)
     http_accept_language = models.CharField(max_length=100)
 
+    def __str__(self):
+        return 'Full path: {0}, Request method: {1}, Remore addr: {2}, \
+                http user agent: {3}, http referer: {4}, \
+                http accept language: {5}'.format(self.full_path,
+                                                  self.request_method,
+                                                  self.remote_addr,
+                                                  self.http_user_agent,
+                                                  self.http_referer,
+                                                  self.http_accept_language)
+
 
 class RequestCounter(models.Model):
 
@@ -49,3 +71,6 @@ class RequestCounter(models.Model):
     def reset(self):
         self.value = 0
         self.save()
+
+    def __str__(self):
+        return 'Number of requests {0}'.format(self.value)
