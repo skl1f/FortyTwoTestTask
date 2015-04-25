@@ -30,7 +30,7 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = [
-    'fortytwotesttask-106.skl1f.at.getbarista.com',
+    'lp.42cc.co:1242',
 ]
 
 
