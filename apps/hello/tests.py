@@ -7,9 +7,10 @@ from django.test.client import Client
 
 class ContactTest(TestCase):
 
-    "Check that status_code is 200 and information in db is correct"
+    """Tests for Contact Model"""
 
     def test_contact_info(self):
+        """Check that status_code is 200 and information in db is correct"""
 
         c = Client()
         page = c.get('/')
@@ -26,7 +27,7 @@ class ContactTest(TestCase):
         assert(contact.show is True)
 
     def test_many_contacts(TestCase):
-        "Add another contact and check it on main page"
+        """Add another contact and check it on main page"""
 
         contact = Contact()
         contact.date_of_birth = datetime.date(1991, 4, 1)
@@ -53,16 +54,17 @@ class ContactTest(TestCase):
 
 class CheckAdmin(TestCase):
 
-    def test_admin(self):
+    """Check admin login"""
+
+    def test_login(self):
+        """Check admin default login and password"""
+
         admin = User.objects.get(id=1)
         assert(admin)
 
-    def test_login(self):
-        "Check admin default login and password"
-
         c = Client()
         login = c.login(username='admin', password='admin')
-        return login
+        assert(login)
 
 
 class RequestLogTest(TestCase):
@@ -70,6 +72,8 @@ class RequestLogTest(TestCase):
     """Check RequestLog in database after request"""
 
     def test_request(self):
+        """Hit unexists url and check it in DB RequestLog"""
+
         c = Client()
         c.get('/missing_url')
         try:
