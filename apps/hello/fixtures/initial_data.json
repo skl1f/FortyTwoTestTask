@@ -28,7 +28,13 @@
     "date_of_birth": "1991-04-01", 
     "skype": "sklifeg", 
     "jabber": "skl1f@jabber.me", 
-    "email": "skl1f@ukrgadget.com"
+    "email": "skl1f@ukrgadget.com",
+    "show": true
   }
+},
+{
+    "pk": 1, 
+    "model": "hello.requestcounter", 
+    "fields": {"value": 0}
 }
 ]

@@ -1,0 +1,26 @@
+{% if logs %}
+[
+{% for log in logs %}
+    {
+        "request_method": "{{ log.request_method }}",
+        "full_path": "{{ log.full_path }}",
+        "remote_addr": "{{ log.remote_addr }}",
+        "http_user_agent": "{{ log.http_user_agent }}",
+        "http_referer": "{{ log.http_referer }}",
+        "http_accept_language": "{{ log.http_accept_language }}"
+    },
+    {% ifequal log logs|last %}
+    {
+        "request_method": "{{ log.request_method }}",
+        "full_path": "{{ log.full_path }}",
+        "remote_addr": "{{ log.remote_addr }}",
+        "http_user_agent": "{{ log.http_user_agent }}",
+        "http_referer": "{{ log.http_referer }}",
+        "http_accept_language": "{{ log.http_accept_language }}"
+    } 
+    {% endifequal %}
+{% endfor %}
+]
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}

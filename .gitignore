@@ -8,6 +8,7 @@
 .idea
 .Ds_Store
 *~
+*.log
 .git_ignore
 build
 .noseids
