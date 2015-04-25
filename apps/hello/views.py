@@ -4,7 +4,7 @@ from .models import Contact, RequestCounter, RequestLog
 
 
 def home(request):
-    contact = Contact.objects.get(id=1)
+    contact = Contact.objects.get(show=True)
     counter = RequestCounter.objects.get(id=1).value
     content = {'contact': contact,
                'counter': counter}
@@ -14,7 +14,7 @@ def home(request):
 
 
 def requests(request):
-    contact = Contact.objects.get(id=1)
+    contact = Contact.objects.get(show=True)
     content = {'contact': contact}
     utils.write_logline(request, content)
     return render(request, 'requests.html', content,
