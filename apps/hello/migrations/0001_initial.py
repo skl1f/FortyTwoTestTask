@@ -8,6 +8,17 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Deleting model 'Contact'
+        db.delete_table(u'hello_contact')
+
+        # Deleting model 'RequestLog'
+        db.delete_table(u'hello_requestlog')
+
+        # Deleting model 'RequestCounter'
+        db.delete_table(u'hello_requestcounter')
+
+
+    def backwards(self, orm):
         # Adding model 'Contact'
         db.create_table(u'hello_contact', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -42,16 +53,6 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'hello', ['RequestCounter'])
 
-
-    def backwards(self, orm):
-        # Deleting model 'Contact'
-        db.delete_table(u'hello_contact')
-
-        # Deleting model 'RequestLog'
-        db.delete_table(u'hello_requestlog')
-
-        # Deleting model 'RequestCounter'
-        db.delete_table(u'hello_requestcounter')
 
 
     models = {
