@@ -13,14 +13,12 @@ def write_logline(request, content):
                    'HTTP_REFERER',
                    'HTTP_ACCEPT_LANGUAGE']
     message = []
-    path = request.build_absolute_uri()
-
-    if path is not '':
-        message.append("Full path: {0}".format(path))
+    message.append("Full path: {0}".format(request.build_absolute_uri()))
 
     for field in META_FIELDS:
         if field in request.META:
             message.append("{0}: {1}; ".format(field, request.META[field]))
+    message = ''.join(message)
     logger.info(message)
 
     if settings.DEBUG is True:
