@@ -5,7 +5,12 @@ from .models import Contact, RequestCounter, RequestLog
 
 def home(request):
     contact = Contact.objects.get(show=True)
-    counter = RequestCounter.objects.get(id=1).value
+    try:
+        counter = RequestCounter.objects.get(id=1).value
+    except DoesNotExist:
+        counter = RequestCounter()
+        counter.value = 1
+        counter.save()
     content = {'contact': contact,
                'counter': counter}
     utils.write_logline(request, content)
