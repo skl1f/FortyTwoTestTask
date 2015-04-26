@@ -12,9 +12,6 @@ class ContactTest(TestCase):
     def test_contact_info(self):
         """Check that status_code is 200 and information in db is correct"""
 
-        c = Client()
-        page = c.get('/')
-        assert(page.status_code == 200)
         contact = Contact.objects.get(show=True)
         assert(contact.date_of_birth == datetime.date(1991, 4, 1))
         assert(contact.skype == u'sklifeg')
@@ -52,7 +49,7 @@ class ContactTest(TestCase):
         assert(contact_on_index.show == contact.show)
 
 
-class CheckAdmin(TestCase):
+class AdminTest(TestCase):
 
     """Check admin login"""
 
@@ -80,3 +77,17 @@ class RequestLogTest(TestCase):
             RequestLog.objects.get(full_path='/missing_url')
         except:
             assert(False)
+
+
+class PagesTests(TestCase):
+
+    """Connect to all pages and check status_code """
+
+    URLS = ['/', '/requests/', '/api/requests/']
+    c = Client()
+
+    def test_pages(self):
+        """ basic test """
+        for url in self.URLS:
+            page = self.c.get(url)
+            assert(page.status_code == 200)
