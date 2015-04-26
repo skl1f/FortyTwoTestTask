@@ -7,7 +7,7 @@ def home(request):
     contact = Contact.objects.get(show=True)
     try:
         counter = RequestCounter.objects.get(id=1).value
-    except DoesNotExist:
+    except:
         counter = RequestCounter()
         counter.value = 1
         counter.save()
