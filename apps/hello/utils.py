@@ -18,15 +18,13 @@ def write_logline(request, content):
     for field in META_FIELDS:
         if field in request.META:
             message.append("{0}: {1}; ".format(field, request.META[field]))
-    message = ''.join(message)
-    logger.info(message)
+    logger.info(''.join(message))
 
     if settings.DEBUG is True:
         message.append("DATA: ")
         for data in content:
             message.append(str(content[data]))
-        message = ''.join(message)
-        logger.debug(message)
+        logger.debug(''.join(message))
 
 
 class RequestLoggingMiddleware(object):
