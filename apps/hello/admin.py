@@ -12,7 +12,7 @@ class RequestLogAdmin(admin.ModelAdmin):
 
 
 class RequestCounterAdmin(admin.ModelAdmin):
-    list_display = ('value')
+    list_display = ('id', 'value',)
 
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(RequestLog, RequestLogAdmin)
