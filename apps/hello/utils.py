@@ -1,30 +1,8 @@
 import logging
 from .models import RequestLog, RequestCounter
-from django.conf import settings
 
 
 logger = logging.getLogger(__name__)
-
-
-def write_logline(request, content):
-    META_FIELDS = ['REQUEST_METHOD',
-                   'REMOTE_ADDR',
-                   'HTTP_USER_AGENT',
-                   'HTTP_REFERER',
-                   'HTTP_ACCEPT_LANGUAGE']
-    message = []
-    message.append("Full path: {0};".format(request.build_absolute_uri()))
-
-    for field in META_FIELDS:
-        if field in request.META:
-            message.append(" {0}: {1}; ".format(field, request.META[field]))
-    logger.info(''.join(message))
-
-    if settings.DEBUG is True:
-        message.append("DATA: ")
-        for data in content:
-            message.append(str(content[data]))
-        logger.debug(''.join(message))
 
 
 class RequestLoggingMiddleware(object):
@@ -45,6 +23,7 @@ class RequestLoggingMiddleware(object):
         """
         Saving some of fields from HttpRequest.
         """
+
         path = request.get_full_path()
 
         if path in ['/api/requests', '/api/requests/']:
@@ -58,4 +37,5 @@ class RequestLoggingMiddleware(object):
         for field in self.META_FIELDS:
             if field in request.META:
                 self.arg[field] = request.META[field]
+        logger.info(str(self.arg))
         RequestLog().save(self.arg)
