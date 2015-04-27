@@ -55,6 +55,7 @@ def edit_contacts(request):
     elif request.method == 'POST' and request.is_ajax():
         form = ContactForm(request.POST)
         if form.is_valid():
+            form.save()
             return HttpResponse('{"response": "OK"}')
         else:
             errors = form.errors
