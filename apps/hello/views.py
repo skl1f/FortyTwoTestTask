@@ -3,6 +3,7 @@ import json
 from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import render
 from django.conf import settings
+from datetime import datetime
 from django.views.decorators.csrf import csrf_protect
 from .forms import ContactForm
 from .models import Contact, RequestCounter, RequestLog
@@ -45,6 +46,7 @@ def api_requests(request):
 def edit_contacts(request):
     contact = Contact.objects.get(show=True)
     form = ContactForm()
+    contact.date_of_birth = contact.date_of_birth.strftime("%d/%m/%Y")
     content = {'form': form,
                'contact': contact}
     if request.method == 'GET':
@@ -55,7 +57,17 @@ def edit_contacts(request):
     elif request.method == 'POST' and request.is_ajax():
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
+            contact = Contact.objects.get(show=True)
+            contact.name = request.POST.getlist("name")[0]
+            contact.lastname = request.POST.getlist("lastname")[0]
+            contact.date_of_birth = datetime.strptime(
+                request.POST.getlist("date_of_birth")[0], '%d/%m/%Y')
+            contact.email = request.POST.getlist("email")[0]
+            contact.jabber = request.POST.getlist("jabber")[0]
+            contact.skype = request.POST.getlist("skype")[0]
+            contact.bio = request.POST.getlist("bio")[0]
+            contact.other_contact = request.POST.getlist("other_contact")[0]
+            contact.save()
             return HttpResponse('{"response": "OK"}')
         else:
             errors = form.errors
