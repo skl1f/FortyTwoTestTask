@@ -3,7 +3,7 @@ import json
 from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import render
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.views.decorators.csrf import csrf_protect
 from .forms import ContactForm
 from .models import Contact, RequestCounter, RequestLog
 
