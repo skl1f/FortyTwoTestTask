@@ -22,5 +22,5 @@
 {% endfor %}
 ]
 {% else %}
-    <p>No polls are available.</p>
+{"error": "no logs in database"}
 {% endif %}
