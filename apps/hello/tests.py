@@ -87,8 +87,7 @@ class PagesTests(TestCase):
             '/edit/',
             '/admin/',
             '/requests/',
-            '/api/requests/',
-            '/api/contacts/']
+            '/api/requests/']
     c = Client()
 
     def test_pages(self):
