@@ -29,7 +29,9 @@ DEBUG = False
 
 TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = ['.getbarista.com']
+ALLOWED_HOSTS = ['.getbarista.com',
+                 'localhost',
+                 '127.0.0.1']
 
 
 # Application definition

@@ -8,51 +8,18 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Contact'
-        db.create_table(u'hello_contact', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('lastname', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('date_of_birth', self.gf('django.db.models.fields.DateField')()),
-            ('email', self.gf('django.db.models.fields.CharField')(max_length=75)),
-            ('jabber', self.gf('django.db.models.fields.CharField')(max_length=75)),
-            ('skype', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('bio', self.gf('django.db.models.fields.TextField')()),
-            ('other_contact', self.gf('django.db.models.fields.TextField')()),
-            ('show', self.gf('django.db.models.fields.BooleanField')()),
-        ))
-        db.send_create_signal(u'hello', ['Contact'])
-
-        # Adding model 'RequestLog'
-        db.create_table(u'hello_requestlog', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('full_path', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('request_method', self.gf('django.db.models.fields.CharField')(max_length=7)),
-            ('remote_addr', self.gf('django.db.models.fields.GenericIPAddressField')(max_length=39)),
-            ('http_user_agent', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('http_referer', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('http_accept_language', self.gf('django.db.models.fields.CharField')(max_length=100)),
-        ))
-        db.send_create_signal(u'hello', ['RequestLog'])
-
-        # Adding model 'RequestCounter'
-        db.create_table(u'hello_requestcounter', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('value', self.gf('django.db.models.fields.IntegerField')()),
-        ))
-        db.send_create_signal(u'hello', ['RequestCounter'])
-
+        from django.core.management import call_command
+        from django.db import connection
+        call_command("loaddata", "initial_data.json")
+        cursor = connection.cursor()
+        cursor.execute("delete from south_migrationhistory where id in (3,4)")
 
     def backwards(self, orm):
-        # Deleting model 'Contact'
-        db.delete_table(u'hello_contact')
-
-        # Deleting model 'RequestLog'
-        db.delete_table(u'hello_requestlog')
-
-        # Deleting model 'RequestCounter'
-        db.delete_table(u'hello_requestcounter')
-
+        from django.db import connection
+        cursor = connection.cursor()
+        cursor.execute("TRUNCATE TABLE `hello_contact`")
+        cursor.execute("TRUNCATE TABLE `hello_requestlog`")
+        cursor.execute("TRUNCATE TABLE `hello_requestcounter`")
 
     models = {
         u'hello.contact': {

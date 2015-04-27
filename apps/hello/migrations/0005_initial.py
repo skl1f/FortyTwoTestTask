@@ -9,17 +9,17 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         from django.core.management import call_command
+        from django.db import connection
         call_command("loaddata", "initial_data.json")
+        cursor = connection.cursor()
+        cursor.execute("delete from south_migrationhistory where migration in ('0004_initial','0005_initial')")
 
     def backwards(self, orm):
-        # Deleting model 'Contact'
-        db.delete_table(u'hello_contact')
-
-        # Deleting model 'RequestLog'
-        db.delete_table(u'hello_requestlog')
-
-        # Deleting model 'RequestCounter'
-        db.delete_table(u'hello_requestcounter')
+        from django.db import connection
+        cursor = connection.cursor()
+        cursor.execute("TRUNCATE TABLE `hello_contact`")
+        cursor.execute("TRUNCATE TABLE `hello_requestlog`")
+        cursor.execute("TRUNCATE TABLE `hello_requestcounter`")
 
     models = {
         u'hello.contact': {
