@@ -19,7 +19,7 @@ def requests(request):
     contact = Contact.objects.get(show=True)
     content = {'contact': contact}
     if settings.DEBUG is True:
-        logger.debug(str(content))
+        logger.debug('test')
     return render(request, 'requests.html', content,
                   content_type="text/html")
 
