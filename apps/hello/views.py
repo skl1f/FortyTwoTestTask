@@ -29,3 +29,19 @@ def api_requests(request):
     utils.write_logline(request, content)
     return render(request, 'api_requests.json', content,
                   content_type="application/json")
+
+
+def api_contacts(request):
+    contact = Contact.objects.get(show=True)
+    content = {'contact': contact}
+    utils.write_logline(request, content)
+    return render(request, 'api_contacts.json', content,
+                  content_type="application/json")
+
+
+def edit_contacts(request):
+    contact = Contact.objects.get(show=True)
+    content = {'contact': contact}
+    utils.write_logline(request, content)
+    return render(request, 'edit_contacts.html', content,
+                  content_type="text/html")
