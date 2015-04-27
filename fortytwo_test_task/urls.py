@@ -8,9 +8,10 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^$', 'hello.views.home', name='home'),
-    url(r'^requests/', 'hello.views.requests', name='requests'),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/requests', 'hello.views.api_requests', name='api_requests')
+    url(r'^admin/$', include(admin.site.urls)),
+    url(r'^requests/$', 'hello.views.requests', name='requests'),
+    url(r'^edit/$', 'hello.views.edit_contacts', name='edit_contacts'),
+    url(r'^api/contacts/$', 'hello.views.api_contacts', name='api_contacts')
 )
 
 urlpatterns += patterns('',
