@@ -85,34 +85,9 @@
   </div>
 </div>
 </div>
-<div class="row" id="result"></div>
+<div class="alert"></div>
 </form>
 </div>
-        <script type="text/javascript">
-                 /* AJAX request for contact info */
-                function callServerAsync(){
-                    $.ajax({
-                    dataType: "json",
-                    url: '/api/contacts/',
-                    success: function(response) {
-                        successCallback(response);
-                    }
-                });
-                };
-
-                function successCallback(responseObj){
-                    var transform = {'tag':'li','html':'Request method: ${request_method}; Full path: ${full_path}; Remote_addr: ${remote_addr}; http user agent: ${http_user_agent}; http referer: ${http_referer}; http accept language: ${http_accept_language}'};
-                    document.getElementById('requests').innerHTML = json2html.transform(responseObj,transform);
-                };
-                
-                $(document).ready(function () {
-                
-                $('#inputDatePicker').datepicker({
-                    format: "dd/mm/yyyy"
-                });  
-                
-                });
-        </script>
 <script type="text/javascript">
 function getCookie(c_name)
 {
@@ -131,10 +106,14 @@ function getCookie(c_name)
  }
 
 $("document").ready(function(){
+  $('#inputDatePicker').datepicker({
+                    format: "dd/mm/yyyy"
+                });
   $(".form-horizontal").submit(function(){
     $.ajaxSetup({
         headers: { "X-CSRFToken": getCookie("csrftoken") }
     });
+    var alert = $('.alert');
     var data = {
       "name": $('#inputName').val(),
       "lastname": $('#inputLastName').val(),
@@ -143,19 +122,21 @@ $("document").ready(function(){
       "jabber": $('#inputJabber').val(),
       "other_contact": $('#inputOtherContacts').val(),
       "bio": $('#inputBio').val(),
-      "skype": $('#inputJabber').val(),
+      "skype": $('#inputSkype').val(),
 
     };
-    data = $(this).serialize() + "&" + $.param(data);
     $.ajax({
       type: "POST",
       dataType: "json",
       cache: false,
-      url: "/api/contacts/", //Relative or absolute path to response.php file
+      url: "/save/", //Relative or absolute path to response.php file
       data: data,
       success: function(data) {
-        alert("data\n");
-      }
+        alert.html("<div class='alert alert-success'>Your contacts are saved.</div>").fadeIn();;
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
     });
     return false;
   });

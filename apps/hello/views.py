@@ -1,9 +1,10 @@
 import logging
 import json
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import render
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from .forms import ContactForm
 from .models import Contact, RequestCounter, RequestLog
 
 logger = logging.getLogger('apps.hello.views')
@@ -51,10 +52,33 @@ def api_contacts(request):
                       content_type="application/json")
     elif request.method == 'POST' and request.is_ajax():
         logger.info(str(request.POST))
-        name = request.POST.get('name')
-        return HttpResponse(json.dumps({'name': name}), content_type="application/json")
+        return HttpResponse(json.dumps({'name': "Obrobleno"}),
+                            content_type="application/json")
 
 
 def edit_contacts(request):
     return render(request, 'edit_contacts.html', {},
                   content_type="text/html")
+
+
+@csrf_protect
+def save_contact(request):
+    contact = Contact.objects.get(show=True)
+    form = ContactForm()
+    content = {'form': form,
+               'contact': contact}
+    if request.method == 'GET':
+        if settings.DEBUG is True:
+            logger.debug(str(content))
+        return render(request, 'edit_form.html', content,
+                      content_type="text/html")
+    elif request.method == 'POST' and request.is_ajax():
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            return HttpResponse('{"response": "OK"}')
+        else:
+            errors = form.errors
+            return HttpResponseServerError(json.dumps(errors),
+                                           content_type='application/json')
+    else:
+        return HttpResponse("BAD")
