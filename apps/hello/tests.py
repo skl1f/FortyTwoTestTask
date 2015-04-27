@@ -85,6 +85,7 @@ class PagesTests(TestCase):
 
     URLS = ['/',
             '/edit/',
+            '/admin/',
             '/requests/',
             '/api/requests/',
             '/api/contacts/']

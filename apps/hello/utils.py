@@ -27,7 +27,7 @@ class RequestLoggingMiddleware(object):
 
         if path in ['/api/requests', '/api/requests/']:
             return None
-        elif path in ['/request', '/requests/']:
+        elif path in ['/requests', '/requests/']:
             RequestCounter.objects.get(id=1).reset()
         else:
             RequestCounter.objects.get(id=1).increment()
