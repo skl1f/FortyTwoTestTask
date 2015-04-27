@@ -84,7 +84,7 @@ class PagesTests(TestCase):
     """Connect to all pages and check status_code """
 
     URLS = ['/',
-            'edit',
+            '/edit/',
             '/requests/',
             '/api/requests/',
             '/api/contacts/']
