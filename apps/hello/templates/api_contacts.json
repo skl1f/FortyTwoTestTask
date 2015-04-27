@@ -1,6 +1,5 @@
 {% if contact %}
-[
-    {
+{
         "name": "{{ contact.name }}",
         "lastname": "{{ contact.lastname }}",
         "date_of_birth": "{{ contact.date_of_birth}}",
@@ -10,9 +9,8 @@
         "bio": "{{ contact.bio }}",
         "other_contact": "{{ contact.other_contact}}"
     },
-]
 {% else %}
-    <p>No contacts is available.</p>
+{ "error": "no contact"}
 {% endif %}
 
 

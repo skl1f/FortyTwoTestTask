@@ -83,7 +83,11 @@ class PagesTests(TestCase):
 
     """Connect to all pages and check status_code """
 
-    URLS = ['/', '/requests/', '/api/requests/']
+    URLS = ['/',
+            'edit',
+            '/requests/',
+            '/api/requests/',
+            '/api/contacts/']
     c = Client()
 
     def test_pages(self):
