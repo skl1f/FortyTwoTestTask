@@ -41,28 +41,8 @@ def api_requests(request):
                   content_type="application/json")
 
 
-@csrf_exempt
-def api_contacts(request):
-    contact = Contact.objects.get(show=True)
-    content = {'contact': contact}
-    if request.method == 'GET':
-        if settings.DEBUG is True:
-            logger.debug(str(content))
-        return render(request, 'api_contacts.json', content,
-                      content_type="application/json")
-    elif request.method == 'POST' and request.is_ajax():
-        logger.info(str(request.POST))
-        return HttpResponse(json.dumps({'name': "Obrobleno"}),
-                            content_type="application/json")
-
-
-def edit_contacts(request):
-    return render(request, 'edit_contacts.html', {},
-                  content_type="text/html")
-
-
 @csrf_protect
-def save_contact(request):
+def edit_contacts(request):
     contact = Contact.objects.get(show=True)
     form = ContactForm()
     content = {'form': form,

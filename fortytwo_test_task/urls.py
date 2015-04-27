@@ -13,7 +13,6 @@ urlpatterns = patterns(
     url(r'^edit/$', 'hello.views.edit_contacts', name='edit_contacts'),
     url(r'^api/contacts/$', 'hello.views.api_contacts', name='api_contacts'),
     url(r'^api/requests/$', 'hello.views.api_requests', name='api_requests'),
-    url(r'^save/', 'hello.views.save_contact')
 )
 
 urlpatterns += patterns('',
