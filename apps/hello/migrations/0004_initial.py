@@ -9,10 +9,7 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         from django.core.management import call_command
-        from django.db import connection
         call_command("loaddata", "initial_data.json")
-        cursor = connection.cursor()
-        cursor.execute("delete from south_migrationhistory where migration in ('0004_initial','0005_initial')")
 
     def backwards(self, orm):
         from django.db import connection
