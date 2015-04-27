@@ -155,7 +155,11 @@ LOGGING = {
             'propagate': True,
             'level': 'DEBUG',
         },
-        'hello': {
+        'apps.hello.views': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+        'apps.hello.utils': {
             'handlers': ['file'],
             'level': 'DEBUG',
         },

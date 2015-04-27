@@ -1,7 +1,7 @@
 import logging
 from .models import RequestLog, RequestCounter
 
-logger = logging.getLogger('hello')
+logger = logging.getLogger(__name__)
 
 
 class RequestLoggingMiddleware(object):
