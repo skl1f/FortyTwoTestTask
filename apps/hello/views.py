@@ -41,8 +41,8 @@ def api_requests(request):
 
 @csrf_protect
 def edit_contacts(request):
+    contact = Contact.objects.get(id=1)
     if request.method == 'GET':
-        contact = Contact.objects.get(id=1)
         form = ContactForm()
         contact.date_of_birth = contact.date_of_birth.strftime("%d/%m/%Y")
         content = {'form': form,
@@ -53,7 +53,6 @@ def edit_contacts(request):
     elif request.method == 'POST' and request.is_ajax():
         form = ContactForm(request.POST)
         if form.is_valid():
-            contact = Contact.objects.get(id=1)
             contact.name = request.POST.getlist("name")[0]
             contact.lastname = request.POST.getlist("lastname")[0]
             contact.date_of_birth = datetime.strptime(

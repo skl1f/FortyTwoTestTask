@@ -70,9 +70,11 @@ class RequestLogTest(TestCase):
 
 class LogLineTest(TestCase):
 
-    """Check that logline have all wxpedcted data"""
+    """Check that logline have all expected data"""
 
     def test_log_contact(self):
+        """check logging data from Contact model"""
+
         excepted_string = ('Name: Oleksii, Lastname: Miroshnychenko,'
                            ' Date of birth: 1991-04-01,'
                            'Email: skl1f@ukrgadget.com,'
@@ -83,6 +85,8 @@ class LogLineTest(TestCase):
         assert(excepted_string == received_string)
 
     def test_log_requestlog(self):
+        """check logging data from RequestLog model"""
+
         c = Client()
         c.get('/RequestLogTest')
         excepted_string = ('FULL_PATH: /RequestLogTest, '
@@ -96,6 +100,8 @@ class LogLineTest(TestCase):
         assert(excepted_string == received_string)
 
     def test_log_requestcounter(self):
+        """check logging data from RequestCounter model"""
+
         c = Client()
         c.get('/RequestLogTest')
         value = RequestCounter.objects.get(id=1)
