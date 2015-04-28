@@ -1,4 +1,5 @@
 from django.db import models
+from PIL import Image
 
 
 class Contact(models.Model):
@@ -13,7 +14,29 @@ class Contact(models.Model):
     skype = models.CharField(max_length=200)
     bio = models.TextField()
     other_contact = models.TextField()
-    show = models.BooleanField()
+    image = models.ImageField(
+        upload_to="profiles",
+        null=True,
+        blank=True,
+        editable=True,
+        help_text="Profile Picture",
+        verbose_name="Profile Picture"
+    )
+    image_height = models.PositiveIntegerField(
+        null=True, blank=True, editable=False, default="200")
+    image_width = models.PositiveIntegerField(
+        null=True, blank=True, editable=False, default="200")
+
+    def save(self):
+        if not self.image:
+            return super(Contact, self).save()
+
+        image = Image.open(self.image)
+        (width, height) = image.size
+        size = (200, 200)
+        image = image.resize(size, Image.ANTIALIAS)
+        image.save(self.image.path)
+        super(Contact, self).save()
 
     def __str__(self):
         return ('Name: {0}, Lastname: {1}, Date of birth: {2},'
@@ -27,17 +50,6 @@ class Contact(models.Model):
                                              self.bio,
                                              self.other_contact)
 
-    def save(self, *args, **kwargs):
-        if self.show:
-            try:
-                temp = Contact.objects.get(show=True)
-                if self != temp:
-                    temp.show = False
-                    temp.save()
-            except Contact.DoesNotExist:
-                pass
-        super(Contact, self).save(*args, **kwargs)
-
 
 class RequestLog(models.Model):
 
@@ -50,16 +62,6 @@ class RequestLog(models.Model):
     http_referer = models.CharField(max_length=200)
     http_accept_language = models.CharField(max_length=100)
 
-    def __str__(self):
-        return ('Full path: {0}, Request method: {1}, Remore addr: {2},'
-                'http user agent: {3}, http referer: {4},'
-                'http accept language: {5}').format(self.full_path,
-                                                    self.request_method,
-                                                    self.remote_addr,
-                                                    self.http_user_agent,
-                                                    self.http_referer,
-                                                    self.http_accept_language)
-
     def save(self, arg):
         self.full_path = arg['FULL_PATH']
         self.request_method = arg['REQUEST_METHOD']
@@ -68,6 +70,16 @@ class RequestLog(models.Model):
         self.http_referer = arg['HTTP_REFERER']
         self.http_accept_language = arg['HTTP_ACCEPT_LANGUAGE']
         super(RequestLog, self).save(arg)
+
+    def __str__(self):
+        return ('FULL_PATH: {0}, REQUEST_METHOD: {1}, REMOTE_ADDR: {2}, '
+                'HTTP_USER_AGENT: {3}, HTTP_REFERER: {4},'
+                ' HTTP_ACCEPT_LANGUAGE: {5}').format(self.full_path,
+                                                     self.request_method,
+                                                     self.remote_addr,
+                                                     self.http_user_agent,
+                                                     self.http_referer,
+                                                     self.http_accept_language)
 
 
 class RequestCounter(models.Model):
