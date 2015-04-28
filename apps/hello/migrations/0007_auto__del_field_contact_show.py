@@ -8,14 +8,20 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        pass
+        # Deleting field 'Contact.show'
+        db.delete_column(u'hello_contact', 'show')
+
 
     def backwards(self, orm):
-        from django.db import connection
-        cursor = connection.cursor()
-        cursor.execute("TRUNCATE TABLE `hello_contact`")
-        cursor.execute("TRUNCATE TABLE `hello_requestlog`")
-        cursor.execute("TRUNCATE TABLE `hello_requestcounter`")
+
+        # User chose to not deal with backwards NULL issues for 'Contact.show'
+        raise RuntimeError("Cannot reverse this migration. 'Contact.show' and its values cannot be restored.")
+        
+        # The following code is provided here to aid in writing a correct migration        # Adding field 'Contact.show'
+        db.add_column(u'hello_contact', 'show',
+                      self.gf('django.db.models.fields.BooleanField')(),
+                      keep_default=False)
+
 
     models = {
         u'hello.contact': {
@@ -24,11 +30,13 @@ class Migration(SchemaMigration):
             'date_of_birth': ('django.db.models.fields.DateField', [], {}),
             'email': ('django.db.models.fields.CharField', [], {'max_length': '75'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'image_height': ('django.db.models.fields.PositiveIntegerField', [], {'default': "'200'", 'null': 'True', 'blank': 'True'}),
+            'image_width': ('django.db.models.fields.PositiveIntegerField', [], {'default': "'200'", 'null': 'True', 'blank': 'True'}),
             'jabber': ('django.db.models.fields.CharField', [], {'max_length': '75'}),
             'lastname': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'other_contact': ('django.db.models.fields.TextField', [], {}),
-            'show': ('django.db.models.fields.BooleanField', [], {}),
             'skype': ('django.db.models.fields.CharField', [], {'max_length': '200'})
         },
         u'hello.requestcounter': {

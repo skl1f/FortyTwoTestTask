@@ -8,14 +8,32 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        pass
+        # Adding field 'Contact.image'
+        db.add_column(u'hello_contact', 'image',
+                      self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True),
+                      keep_default=False)
+
+        # Adding field 'Contact.image_height'
+        db.add_column(u'hello_contact', 'image_height',
+                      self.gf('django.db.models.fields.PositiveIntegerField')(default='200', null=True, blank=True),
+                      keep_default=False)
+
+        # Adding field 'Contact.image_width'
+        db.add_column(u'hello_contact', 'image_width',
+                      self.gf('django.db.models.fields.PositiveIntegerField')(default='200', null=True, blank=True),
+                      keep_default=False)
+
 
     def backwards(self, orm):
-        from django.db import connection
-        cursor = connection.cursor()
-        cursor.execute("TRUNCATE TABLE `hello_contact`")
-        cursor.execute("TRUNCATE TABLE `hello_requestlog`")
-        cursor.execute("TRUNCATE TABLE `hello_requestcounter`")
+        # Deleting field 'Contact.image'
+        db.delete_column(u'hello_contact', 'image')
+
+        # Deleting field 'Contact.image_height'
+        db.delete_column(u'hello_contact', 'image_height')
+
+        # Deleting field 'Contact.image_width'
+        db.delete_column(u'hello_contact', 'image_width')
+
 
     models = {
         u'hello.contact': {
@@ -24,6 +42,9 @@ class Migration(SchemaMigration):
             'date_of_birth': ('django.db.models.fields.DateField', [], {}),
             'email': ('django.db.models.fields.CharField', [], {'max_length': '75'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'image_height': ('django.db.models.fields.PositiveIntegerField', [], {'default': "'200'", 'null': 'True', 'blank': 'True'}),
+            'image_width': ('django.db.models.fields.PositiveIntegerField', [], {'default': "'200'", 'null': 'True', 'blank': 'True'}),
             'jabber': ('django.db.models.fields.CharField', [], {'max_length': '75'}),
             'lastname': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
