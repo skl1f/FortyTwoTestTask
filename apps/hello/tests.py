@@ -23,7 +23,7 @@ class ContactTest(TestCase):
         contact.name = 'Иван'
         contact.lastname = 'Иванович'
         contact.bio = 'Тестовий персонаж'
-        contact.other_contact = u'https://github.com/test'
+        contact.other_contact = 'https://github.com/test'
         contact.save()
         contact_from_db = Contact.objects.get(id=2)
         assert(contact_from_db.date_of_birth == datetime.date(1991, 4, 1))
