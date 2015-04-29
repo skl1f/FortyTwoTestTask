@@ -16,7 +16,7 @@ def home(request):
     counter = RequestCounter.objects.get(id=1)
     content = {'contact': contact,
                'counter': counter}
-    logger.debug(str(content))
+    logger.debug(content)
     return render(request, 'index.html', content,
                   content_type="text/html")
 
@@ -24,7 +24,7 @@ def home(request):
 def requests(request):
     contact = Contact.objects.get(id=1)
     content = {'contact': contact}
-    logger.debug(str(content))
+    logger.debug(content)
     return render(request, 'requests.html', content,
                   content_type="text/html")
 
@@ -34,7 +34,7 @@ def api_requests(request):
     logs = list(RequestLog.objects.order_by('-id')[:10])
     content = {'contact': contact,
                'logs': logs}
-    logger.debug(str(content))
+    logger.debug(content)
     return render(request, 'api_requests.json', content,
                   content_type="application/json")
 
@@ -47,7 +47,7 @@ def edit_contacts(request):
         contact.date_of_birth = contact.date_of_birth.strftime("%d/%m/%Y")
         content = {'form': form,
                    'contact': contact}
-        logger.debug(str(content))
+        logger.debug(content)
         return render(request, 'edit_form.html', content,
                       content_type="text/html")
     elif request.method == 'POST' and request.is_ajax():
