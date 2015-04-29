@@ -38,18 +38,6 @@ class Contact(models.Model):
         image.save(self.image.path)
         super(Contact, self).save()
 
-    def __unicode__(self):
-        return ('Name: {0}, Lastname: {1}, Date of birth: {2},'
-                'Email: {3}, Jabber: {4}, Skype: {5}, Bio: {6},'
-                'Other contact: {7}').format(self.name,
-                                             self.lastname,
-                                             self.date_of_birth,
-                                             self.email,
-                                             self.jabber,
-                                             self.skype,
-                                             self.bio,
-                                             self.other_contact)
-
     def __str__(self):
         return ('Name: {0}, Lastname: {1}, Date of birth: {2},'
                 'Email: {3}, Jabber: {4}, Skype: {5}, Bio: {6},'
