@@ -37,6 +37,12 @@ class ContactTest(TestCase):
         assert(contact.bio == u'Python Dev')
         assert(contact.other_contact == u'https://github.com/skl1f')
 
+    def test_contacts_returned(self):
+        """test that only one contact returned"""
+
+        C = Contact.objects.get(id=1)
+        assert(isinstance(C, Contact))
+
 
 class AdminTest(TestCase):
 
