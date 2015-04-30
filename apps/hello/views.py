@@ -6,16 +6,14 @@ from django.shortcuts import render
 from datetime import datetime
 from django.views.decorators.csrf import csrf_protect
 from .forms import ContactForm
-from .models import Contact, RequestCounter, RequestLog
+from .models import Contact, RequestLog
 
 logger = logging.getLogger('apps.hello.views')
 
 
 def home(request):
     contact = Contact.objects.get(id=1)
-    counter = RequestCounter.objects.get(id=1)
-    content = {'contact': contact,
-               'counter': counter}
+    content = {'contact': contact}
     logger.debug(content)
     return render(request, 'index.html', content,
                   content_type="text/html")
