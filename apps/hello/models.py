@@ -1,5 +1,14 @@
+from __future__ import unicode_literals
 from django.db import models
 from PIL import Image
+from datetime import date
+
+
+class ContactManager(models.Manager):
+
+    def create_contact(self, name):
+        contact = self.create(name=name, date_of_birth=date.today())
+        return contact
 
 
 class Contact(models.Model):
@@ -27,18 +36,20 @@ class Contact(models.Model):
     image_width = models.PositiveIntegerField(
         null=True, blank=True, editable=False, default="200")
 
-    def save(self):
+    objects = ContactManager()
+
+    def save(self, *args, **kwargs):
         if not self.image:
-            return super(Contact, self).save()
+            return super(Contact, self).save(*args, **kwargs)
 
         image = Image.open(self.image)
         (width, height) = image.size
         size = (200, 200)
         image = image.resize(size, Image.ANTIALIAS)
         image.save(self.image.path)
-        super(Contact, self).save()
+        super(Contact, self).save(*args, **kwargs)
 
-    def __str__(self):
+    def __unicode__(self):
         return ('Name: {0}, Lastname: {1}, Date of birth: {2},'
                 'Email: {3}, Jabber: {4}, Skype: {5}, Bio: {6},'
                 'Other contact: {7}').format(self.name,

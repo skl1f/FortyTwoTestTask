@@ -11,11 +11,11 @@ class ContactTest(TestCase):
 
     """Tests for Contact Model"""
 
-    def test_add_contacts(self):
-        """Add another contact and check it on main page"""
+    def setUp(self):
+        """Add new contact to database"""
 
-        contact = Contact()
-        contact.id = 2
+        self.client = Client()
+        contact = Contact.objects.create_contact("Тест")
         contact.date_of_birth = datetime.date(1991, 4, 1)
         contact.skype = 'Тест'
         contact.jabber = 'test@jabber.me'
@@ -25,6 +25,10 @@ class ContactTest(TestCase):
         contact.bio = 'Тестовий персонаж'
         contact.other_contact = 'https://github.com/test'
         contact.save()
+
+    def test_add_contacts(self):
+        """Add another contact and check it on datetime"""
+
         contact_from_db = Contact.objects.get(id=2)
         assert(contact_from_db.date_of_birth == datetime.date(1991, 4, 1))
         assert(contact_from_db.skype == 'Тест')
@@ -38,7 +42,6 @@ class ContactTest(TestCase):
     def test_contact_info(self):
         """Check that status_code is 200 and information in db"""
 
-        ContactTest.test_add_contacts(self)
         contact = Contact.objects.get(id=1)
         assert(contact.date_of_birth == datetime.date(1991, 4, 1))
         assert(contact.skype == 'sklifeg')
@@ -49,25 +52,33 @@ class ContactTest(TestCase):
         assert(contact.bio == 'Python Dev')
         assert(contact.other_contact == 'https://github.com/skl1f')
 
-    def test_contacts_returned(self):
-        """test that only one contact returned"""
+    def test_contact_on_index(self):
+        """Get main page and check contact information"""
 
-        C = Contact.objects.get(id=1)
-        assert(isinstance(C, Contact))
+        main = self.client.get("/")
+        contact = Contact.objects.get(id=1)
+        assert(contact.name in main.content)
+        assert(contact.lastname in main.content)
+        assert(contact.skype in main.content)
+        assert(contact.jabber in main.content)
+        assert(contact.bio in main.content)
+        assert(contact.other_contact in main.content)
+        assert(contact.date_of_birth.strftime("%B %-d, %Y") in main.content)
 
 
 class AdminTest(TestCase):
 
     """Check admin login"""
 
+    def setUp(self):
+        self.client = Client()
+
     def test_login(self):
         """Check admin default login and password"""
 
         admin = User.objects.get(id=1)
         assert(admin)
-
-        c = Client()
-        login = c.login(username='admin', password='admin')
+        login = self.client.login(username='admin', password='admin')
         assert(login)
 
 
@@ -75,11 +86,13 @@ class RequestLogTest(TestCase):
 
     """Check RequestLog in database after request"""
 
+    def setUp(self):
+        self.client = Client()
+
     def test_request(self):
         """Hit unexists url and check it in DB RequestLog"""
 
-        c = Client()
-        c.get('/missing_url')
+        self.client.get('/missing_url')
         try:
             RequestLog.objects.get(full_path='/missing_url')
         except:
@@ -89,6 +102,9 @@ class RequestLogTest(TestCase):
 class LogLineTest(TestCase):
 
     """Check that logline have all expected data"""
+
+    def setUp(self):
+        self.client = Client()
 
     def test_log_contact(self):
         """check logging data from Contact model"""
@@ -105,8 +121,7 @@ class LogLineTest(TestCase):
     def test_log_requestlog(self):
         """check logging data from RequestLog model"""
 
-        c = Client()
-        c.get('/RequestLogTest')
+        self.client.get('/RequestLogTest')
         excepted_string = ('FULL_PATH: /RequestLogTest, '
                            'REQUEST_METHOD: GET, '
                            'REMOTE_ADDR: 127.0.0.1, '
@@ -120,8 +135,7 @@ class LogLineTest(TestCase):
     def test_log_requestcounter(self):
         """check logging data from RequestCounter model"""
 
-        c = Client()
-        c.get('/RequestLogTest')
+        self.client.get('/RequestLogTest')
         value = RequestCounter.objects.get(id=1)
         assert(str(value) == 'Number of requests 1')
 
@@ -130,15 +144,16 @@ class PagesTests(TestCase):
 
     """Connect to all pages and check status_code """
 
-    URLS = ['/',
-            '/edit/',
-            '/admin/',
-            '/requests/',
-            '/api/requests/']
-    c = Client()
+    def setUp(self):
+        self.client = Client()
+        self.URLS = ['/',
+                     '/edit/',
+                     '/admin/',
+                     '/requests/',
+                     '/api/requests/']
 
     def test_pages(self):
         """ basic test """
         for url in self.URLS:
-            page = self.c.get(url)
+            page = self.client.get(url)
             assert(page.status_code == 200)
