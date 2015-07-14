@@ -8,7 +8,6 @@ from django.test.client import Client
 
 
 class ContactTest(TestCase):
-
     """Tests for Contact Model"""
 
     def setUp(self):
