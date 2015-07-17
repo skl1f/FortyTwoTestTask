@@ -1,13 +1,17 @@
 from __future__ import unicode_literals
 from django.db import models
 from PIL import Image
-from datetime import date
 
 
 class ContactManager(models.Manager):
 
-    def create_contact(self, name):
-        contact = self.create(name=name, date_of_birth=date.today())
+    def create_contact(self, name, lastname, skype, jabber, email,
+                       date_of_birth, bio, other_contact):
+
+        contact = self.create(name=name, lastname=lastname,
+                              skype=skype, jabber=jabber, email=email, bio=bio,
+                              other_contact=other_contact,
+                              date_of_birth=date_of_birth,)
         return contact
 
 
