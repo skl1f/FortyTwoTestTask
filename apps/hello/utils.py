@@ -28,9 +28,15 @@ class RequestLoggingMiddleware(object):
         if path in ['/api/requests', '/api/requests/']:
             return None
         elif path in ['/requests', '/requests/']:
-            RequestCounter.objects.get(id=1).reset()
+            try:
+                RequestCounter.objects.get(id=1).reset()
+            except:
+                logger.info("Problem with RequestCounter")
         else:
-            RequestCounter.objects.get(id=1).increment()
+            try:
+                RequestCounter.objects.get(id=1).increment()
+            except:
+                logger.info("Problem with RequestCounter")
 
         self.arg['FULL_PATH'] = path
         for field in self.META_FIELDS:

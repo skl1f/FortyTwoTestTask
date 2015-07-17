@@ -13,7 +13,11 @@ logger = logging.getLogger('apps.hello.views')
 
 
 def home(request):
-    contact = Contact.objects.get(id=1)
+    try:
+        contact = Contact.objects.get(id=1)
+    except Contact.DoesNotExist:
+        return HttpResponseBadRequest("Bad request")
+
     content = {'contact': contact}
     logger.debug(content)
     requestsLogger(request)
@@ -22,7 +26,11 @@ def home(request):
 
 
 def requests(request):
-    contact = Contact.objects.get(id=1)
+    try:
+        contact = Contact.objects.get(id=1)
+    except Contact.DoesNotExist:
+        return HttpResponseBadRequest("Bad request")
+
     content = {'contact': contact}
     logger.debug(content)
     requestsLogger(request)
@@ -31,7 +39,11 @@ def requests(request):
 
 
 def api_requests(request):
-    contact = Contact.objects.get(id=1)
+    try:
+        contact = Contact.objects.get(id=1)
+    except Contact.DoesNotExist:
+        return HttpResponseBadRequest("Bad request")
+
     logs = list(RequestLog.objects.order_by('-id')[:10])
     content = {'contact': contact,
                'logs': logs}
@@ -43,7 +55,11 @@ def api_requests(request):
 
 @csrf_protect
 def edit_contacts(request):
-    contact = Contact.objects.get(id=1)
+    try:
+        contact = Contact.objects.get(id=1)
+    except Contact.DoesNotExist:
+        return HttpResponseBadRequest("Bad request")
+
     if request.method == 'GET':
         form = ContactForm()
         contact.date_of_birth = contact.date_of_birth.strftime("%d/%m/%Y")
