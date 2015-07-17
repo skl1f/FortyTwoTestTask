@@ -25,32 +25,6 @@ class ContactTest(TestCase):
             'Тестовий персонаж',
             'https://github.com/test',)
 
-    def test_add_contacts(self):
-        """Add another contact and check it on datetime"""
-
-        contact_from_db = Contact.objects.get(pk=self.contact.pk)
-        assert(contact_from_db.date_of_birth == date(1991, 4, 1))
-        assert(contact_from_db.skype == 'Тест')
-        assert(contact_from_db.jabber == 'test@jabber.me')
-        assert(contact_from_db.email == 'test@example.com')
-        assert(contact_from_db.name == 'Иван')
-        assert(contact_from_db.lastname == 'Иванович')
-        assert(contact_from_db.bio == 'Тестовий персонаж')
-        assert(contact_from_db.other_contact == 'https://github.com/test')
-
-    def test_contact_info(self):
-        """Check that status_code is 200 and information in db"""
-
-        contact = Contact.objects.get(id=1)
-        assert(contact.date_of_birth == date(1991, 4, 1))
-        assert(contact.skype == 'sklifeg')
-        assert(contact.jabber == 'skl1f@jabber.me')
-        assert(contact.email == 'skl1f@ukrgadget.com')
-        assert(contact.name == 'Oleksii')
-        assert(contact.lastname == 'Miroshnychenko')
-        assert(contact.bio == 'Python Dev')
-        assert(contact.other_contact == 'https://github.com/skl1f')
-
     def test_contact_on_index(self):
         """Get main page and check contact information"""
 

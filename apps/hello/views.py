@@ -7,6 +7,7 @@ from datetime import datetime
 from django.views.decorators.csrf import csrf_protect
 from .forms import ContactForm
 from .models import Contact, RequestLog
+from .utils import requestsLogger
 
 logger = logging.getLogger('apps.hello.views')
 
@@ -15,6 +16,7 @@ def home(request):
     contact = Contact.objects.get(id=1)
     content = {'contact': contact}
     logger.debug(content)
+    requestsLogger(request)
     return render(request, 'index.html', content,
                   content_type="text/html")
 
@@ -23,6 +25,7 @@ def requests(request):
     contact = Contact.objects.get(id=1)
     content = {'contact': contact}
     logger.debug(content)
+    requestsLogger(request)
     return render(request, 'requests.html', content,
                   content_type="text/html")
 
@@ -33,6 +36,7 @@ def api_requests(request):
     content = {'contact': contact,
                'logs': logs}
     logger.debug(content)
+    requestsLogger(request)
     return render(request, 'api_requests.json', content,
                   content_type="application/json")
 
@@ -45,6 +49,7 @@ def edit_contacts(request):
         contact.date_of_birth = contact.date_of_birth.strftime("%d/%m/%Y")
         content = {'form': form,
                    'contact': contact}
+        requestsLogger(request)
         logger.debug(content)
         return render(request, 'edit_form.html', content,
                       content_type="text/html")
