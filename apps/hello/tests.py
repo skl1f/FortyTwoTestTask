@@ -38,6 +38,19 @@ class ContactTest(TestCase):
         assert(contact.other_contact in main.content)
         assert(contact.date_of_birth.strftime("%B %-d, %Y") in main.content)
 
+    def test_check_second_contact(self):
+        """Check that only one contact will be on page"""
+
+        main = self.client.get("/")
+        assert(self.contact.name not in main.content)
+        assert(self.contact.lastname not in main.content)
+        assert(self.contact.skype not in main.content)
+        assert(self.contact.jabber not in main.content)
+        assert(self.contact.bio not in main.content)
+        assert(self.contact.other_contact not in main.content)
+        assert(self.contact.date_of_birth.strftime(
+            "%B %-d, %Y") not in main.content)
+
 
 class AdminTest(TestCase):
 
