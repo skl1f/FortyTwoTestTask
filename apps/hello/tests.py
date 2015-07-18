@@ -21,7 +21,7 @@ class ContactTest(TestCase):
             'Тест',
             'test@jabber.me',
             'test@example.com',
-            date(1991, 4, 1),
+            date(1900, 4, 1),
             'Тестовий персонаж',
             'https://github.com/test',)
 
