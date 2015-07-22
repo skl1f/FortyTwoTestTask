@@ -1,0 +1,16 @@
+{% if counter %}
+{
+        "counter": "{{ counter.value }}"
+}
+{% else %}
+{ "error": "no counter"}
+{% endif %}
+
+
+
+
+
+
+
+
+
