@@ -136,7 +136,8 @@ class PagesTests(TestCase):
                      '/edit/',
                      '/admin/',
                      '/requests/',
-                     '/api/requests/']
+                     '/api/requests/',
+                     '/api/counter/', ]
 
     def test_pages(self):
         """ basic test """

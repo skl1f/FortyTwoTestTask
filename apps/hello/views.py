@@ -6,7 +6,7 @@ from django.shortcuts import render
 from datetime import datetime
 from django.views.decorators.csrf import csrf_protect
 from .forms import ContactForm
-from .models import Contact, RequestLog
+from .models import Contact, RequestLog, RequestCounter
 
 logger = logging.getLogger('apps.hello.views')
 
@@ -15,7 +15,7 @@ def home(request):
     try:
         contact = Contact.objects.get(id=1)
     except Contact.DoesNotExist:
-        return render(request, 'error/index.html', None,
+        return render(request, 'error.html', None,
                       content_type="text/html")
 
     content = {'contact': contact}
@@ -29,7 +29,7 @@ def requests(request):
     try:
         contact = Contact.objects.get(id=1)
     except Contact.DoesNotExist:
-        return render(request, 'error/index.html', None,
+        return render(request, 'error.html', None,
                       content_type="text/html")
 
     content = {'contact': contact}
@@ -43,7 +43,7 @@ def api_requests(request):
     try:
         contact = Contact.objects.get(id=1)
     except Contact.DoesNotExist:
-        return render(request, 'error/index.html', None,
+        return render(request, 'error.html', None,
                       content_type="text/html")
 
     logs = list(RequestLog.objects.order_by('-id')[:10])
@@ -55,12 +55,24 @@ def api_requests(request):
                   content_type="application/json")
 
 
+def api_requests_counter(request):
+    try:
+        counter = RequestCounter.objects.get(id=1)
+    except Exception as e:
+        logger.debug(e)
+
+    content = {"counter": counter}
+
+    return render(request, 'api_counter.json', content,
+                  content_type="application/json")
+
+
 @csrf_protect
 def edit_contacts(request):
     try:
         contact = Contact.objects.get(id=1)
     except Contact.DoesNotExist:
-        return render(request, 'error/index.html', None,
+        return render(request, 'error.html', None,
                       content_type="text/html")
 
     if request.method == 'GET':

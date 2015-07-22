@@ -12,6 +12,8 @@ urlpatterns = patterns(
     url(r'^requests/$', 'hello.views.requests', name='requests'),
     url(r'^edit/$', 'hello.views.edit_contacts', name='edit_contacts'),
     url(r'^api/requests/$', 'hello.views.api_requests', name='api_requests'),
+    url(r'^api/counter/$', 'hello.views.api_requests_counter',
+        name='api_requests_counter'),
 )
 
 urlpatterns += patterns('',
