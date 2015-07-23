@@ -27,35 +27,9 @@
                 <li>Other contact: {{ contact.other_contact }}</li>
             </ul></div>
         </div>
-        <div class="row">
+        <div class="row" id="requests">
             <h2>Requests:</h2>
             <div id="requests"></div>
-                <script>
-                /* AJAX request to requests */
-                function callServerAsync(){
-                    $.ajax({
-                    dataType: "json",
-                    url: '/api/requests/',
-                    success: function(response) {
-                        successCallback(response);
-                    }
-                });
-                };
-
-                function successCallback(responseObj){
-                    var transform = {'tag':'li','html':'Request method: ${request_method}; Full path: ${full_path}; Remote_addr: ${remote_addr}; http user agent: ${http_user_agent}; http referer: ${http_referer}; http accept language: ${http_accept_language}'};
-                    document.getElementById('requests').innerHTML = json2html.transform(responseObj,transform);
-                };
-
-                get_title();
-                function get_title(){
-                    $.getJSON('/api/counter/',function(data){
-                    document.title="(" + data['counter'] + ") Request Page | 42-test-skl1f";
-                });
-                } 
-
-                callServerAsync();
-                setInterval(callServerAsync,10000);
-                setInterval(get_title, 10000);
-                </script>
+                <script src="{% static "js/requests.js" %}"></script>
+        </div>
 {% endblock %}
