@@ -57,16 +57,16 @@ def api_requests(request):
 
 @csrf_protect
 def api_requests_counter(request):
-    if request.method == 'GET':
-        try:
-            counter = RequestCounter.objects.get(id=1)
-        except Exception as e:
+    try:
+        counter = RequestCounter.objects.get(id=1)
+    except Exception as e:
             logger.debug(e)
+    if request.method == 'GET':
         content = {"counter": counter}
         return render(request, 'api_counter.json', content,
                       content_type="application/json")
     elif request.method == 'POST' and request.is_ajax():
-        RequestCounter.objects.get(id=1).reset()
+        counter.reset()
         return HttpResponse('{"response": "OK"}',
                             content_type='application/json')
 
