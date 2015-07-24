@@ -62,7 +62,6 @@ def api_requests_counter(request):
             counter = RequestCounter.objects.get(id=1)
         except Exception as e:
             logger.debug(e)
-
         content = {"counter": counter}
         return render(request, 'api_counter.json', content,
                       content_type="application/json")
