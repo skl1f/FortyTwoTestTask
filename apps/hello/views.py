@@ -68,6 +68,8 @@ def api_requests_counter(request):
                       content_type="application/json")
     elif request.method == 'POST' and request.is_ajax():
         RequestCounter.objects.get(id=1).reset()
+        return HttpResponse('{"response": "OK"}',
+                            content_type='application/json')
 
 
 @csrf_protect
@@ -100,7 +102,8 @@ def edit_contacts(request):
             contact.bio = request.POST.getlist("bio")[0]
             contact.other_contact = request.POST.getlist("other_contact")[0]
             contact.save()
-            return HttpResponse('{"response": "OK"}')
+            return HttpResponse('{"response": "OK"}',
+                                content_type='application/json')
         else:
             errors = form.errors
             return HttpResponseServerError(json.dumps(errors),
