@@ -30,7 +30,7 @@ $.ajaxSetup({
 
 $('#requests').on('mouseenter', function(){
     $.post( "/api/counter/", { 'reset': 1} );
-    get_title();
+    callServerAsync();
 });
 
 
@@ -40,22 +40,18 @@ function callServerAsync(){
     dataType: "json",
     url: '/api/requests/',
     success: function(response) {
-        successCallback(response);
+        renderRequests(response);
     }
 });
-};
-
-function successCallback(responseObj){
-    var transform = {'tag':'li','html':'Request method: ${request_method}; Full path: ${full_path}; Remote_addr: ${remote_addr}; http user agent: ${http_user_agent}; http referer: ${http_referer}; http accept language: ${http_accept_language}'};
-    document.getElementById('requests').innerHTML = json2html.transform(responseObj,transform);
-};
-
-get_title();
-function get_title(){
     $.getJSON('/api/counter/',function(data){
     document.title="(" + data['counter'] + ") Request Page | 42-test-skl1f";
 });
-} 
+};
+
+function renderRequests(responseObj){
+    var transform = {'tag':'li','html':'Request method: ${request_method}; Full path: ${full_path}; Remote_addr: ${remote_addr}; http user agent: ${http_user_agent}; http referer: ${http_referer}; http accept language: ${http_accept_language}'};
+    document.getElementById('requests').innerHTML = json2html.transform(responseObj,transform);
+};
 
 callServerAsync();
 setInterval(callServerAsync,10000);
