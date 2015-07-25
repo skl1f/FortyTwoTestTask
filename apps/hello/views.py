@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseServerError, \
     HttpResponseBadRequest
 from django.shortcuts import render
 from datetime import datetime
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from .forms import ContactForm
 from .models import Contact, RequestLog, RequestCounter
 
@@ -55,12 +55,12 @@ def api_requests(request):
                   content_type="application/json")
 
 
-@csrf_protect
+@ensure_csrf_cookie
 def api_requests_counter(request):
     try:
         counter = RequestCounter.objects.get(id=1)
     except Exception as e:
-            logger.debug(e)
+        logger.debug(e)
     if request.method == 'GET':
         content = {"counter": counter}
         return render(request, 'api_counter.json', content,

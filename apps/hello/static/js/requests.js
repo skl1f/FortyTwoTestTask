@@ -55,4 +55,3 @@ function renderRequests(responseObj){
 
 callServerAsync();
 setInterval(callServerAsync,10000);
-setInterval(get_title, 10000);
